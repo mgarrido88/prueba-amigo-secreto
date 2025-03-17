@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Juego del Amigo Secreto</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: url('https://source.unsplash.com/1600x900/?christmas,holiday'); /* Imagen de fondo */
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .container {
+            max-width: 600px;
+            width: 90%;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        input, button {
+            padding: 12px;
+            margin: 10px 0;
+            width: 80%;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        button {
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        li {
+            padding: 5px 0;
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        h1, h3 {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Juego del Amigo Secreto 🎁</h1>
+
+        <input type="text" id="nombreInput" placeholder="Ingresa un nombre" />
+        <button onclick="agregarNombre()">Agregar Nombre</button>
+
+        <h3>Lista de Participantes:</h3>
+        <ul id="listaNombres"></ul>
+
+        <button onclick="sortearAmigoSecreto()">Sortear Amigo Secreto</button>
+
+        <div id="resultado" class="result"></div>
+    </div>
+
+    <script>
+        const nombres = [];
+
+        function agregarNombre() {
+            const input = document.getElementById('nombreInput');
+            const nombre = input.value.trim();
+
+            if (nombre !== '') {
+                nombres.push(nombre);
+                actualizarLista();
+                input.value = ''; // Limpiar input
+            } else {
+                alert('Por favor, ingresa un nombre válido.');
+            }
+        }
+
+        function actualizarLista() {
+            const lista = document.getElementById('listaNombres');
+            lista.innerHTML = '';
+
+            nombres.forEach(nombre => {
+                const li = document.createElement('li');
+                li.textContent = nombre;
+                lista.appendChild(li);
+            });
+        }
+
+        function sortearAmigoSecreto() {
+            if (nombres.length < 2) {
+                alert('Debe haber al menos 2 participantes para sortear.');
+                return;
+            }
+
+            // Elegir un nombre aleatorio del array
+            const indexAleatorio = Math.floor(Math.random() * nombres.length);
+            const nombreSeleccionado = nombres[indexAleatorio];
+
+            // Mostrar el resultado
+            const resultadoDiv = document.getElementById('resultado');
+            resultadoDiv.innerHTML = `<h3>¡El Amigo Secreto es!</h3><p><strong>${nombreSeleccionado}</strong></p>`;
+        }
+    </script>
+
+</body>
+</html>
